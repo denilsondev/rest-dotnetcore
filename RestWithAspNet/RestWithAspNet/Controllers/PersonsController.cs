@@ -15,14 +15,14 @@ namespace RestWithAspNet.Controllers
             _personService = personService;
 
         }
-        // GET api/values
+        
         [HttpGet]
         public ActionResult Get()
         {
             return Ok(_personService.FindAll());
         }
 
-        // GET api/values/5
+        
         [HttpGet("{id}")]
         public ActionResult<string> Get(long id)
         {
@@ -31,7 +31,7 @@ namespace RestWithAspNet.Controllers
             return Ok(person);
         }
 
-        // POST api/values
+        
         [HttpPost]
         public IActionResult Post([FromBody] Person person)
         {
@@ -39,7 +39,7 @@ namespace RestWithAspNet.Controllers
             return new ObjectResult(_personService.Create(person));
         }
 
-        // PUT api/values/5
+        
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Person person)
         {
@@ -47,7 +47,7 @@ namespace RestWithAspNet.Controllers
             return new ObjectResult(_personService.Update(person));
         }
 
-        // DELETE api/values/5
+        
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using RestWithAspNet.Services;
 using RestWithAspNet.Services.Implementations;
+using RestWithAspNet.Model.Context;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.EntityFrameworkCore;
 
 namespace RestWithAspNet
 {
@@ -27,6 +25,11 @@ namespace RestWithAspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration["MySqlConnection:MySqlConnectionString"];
+
+            //services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<IPersonService, PersonServiceImpl>();
