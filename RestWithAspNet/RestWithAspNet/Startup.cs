@@ -7,9 +7,6 @@ using RestWithAspNet.Services;
 using RestWithAspNet.Services.Implementations;
 using RestWithAspNet.Model.Context;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore;
 
 namespace RestWithAspNet
 {
@@ -27,8 +24,8 @@ namespace RestWithAspNet
         {
             var connection = Configuration["MySqlConnection:MySqlConnectionString"];
 
-            //services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
-
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
