@@ -44,6 +44,7 @@ namespace RestWithAspNet.Controllers
         public IActionResult Put(int id, [FromBody] Person person)
         {
             if (person == null) return BadRequest();
+            person.Id = id;
             return new ObjectResult(_personService.Update(person));
         }
 
