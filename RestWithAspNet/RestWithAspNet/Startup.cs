@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RestWithAspNet.Services;
-using RestWithAspNet.Services.Implementations;
+using RestWithAspNet.Business;
+using RestWithAspNet.Business.Implementations;
 using RestWithAspNet.Model.Context;
 using Microsoft.EntityFrameworkCore;
+using RestWithAspNet.Repository;
+using RestWithAspNet.Repository.Implementations;
 
 namespace RestWithAspNet
 {
@@ -31,7 +33,8 @@ namespace RestWithAspNet
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<IPersonService, PersonServiceImpl>();
+            services.AddScoped<IPersonBusiness, PersonBusiness>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

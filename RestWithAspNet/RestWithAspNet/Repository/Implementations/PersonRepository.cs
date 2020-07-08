@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using RestWithAspNet.Model;
 using RestWithAspNet.Model.Context;
 
-namespace RestWithAspNet.Services.Implementations
+namespace RestWithAspNet.Repository.Implementations
 {
-    public class PersonServiceImpl : IPersonService
+    public class PersonRepository : IPersonRepository
     {
         private MySQLContext _context;
 
-        public PersonServiceImpl(MySQLContext context)
+        public PersonRepository(MySQLContext context)
         {
             _context = context;
 
@@ -79,7 +78,7 @@ namespace RestWithAspNet.Services.Implementations
             return person;
         }
 
-        private bool Exits(long id)
+        public bool Exits(long id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }
