@@ -9,14 +9,21 @@ using RestWithAspNet.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using RestWithAspNet.Repository;
 using RestWithAspNet.Repository.Implementations;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace RestWithAspNet
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger _logger;
+        public IHostingEnvironment _environment { get; }
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger, IHostingEnvironment environment )
         {
+            _logger = logger;
             Configuration = configuration;
+            _environment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -24,12 +31,32 @@ namespace RestWithAspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration["MySqlConnection:MySqlConnectionString"];
-
-            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+            var connectionString = Configuration["MySqlConnection:MySqlConnectionString"];
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connectionString));
 
             services.AddApiVersioning();
             
+            if(_environment.IsDevelopment())
+            {
+                try
+                {
+                    var evolveConnetcion = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+                    var evolve = new Evolve.Evolve("evolve.json", evolveConnetcion, msg => _logger.LogInformation(msg))
+                    {
+                        Locations = new List<string> { "db/migrations" },
+                        IsEraseDisabled = true
+                    };
+
+                    evolve.Migrate();
+                }
+                catch (System.Exception ex)
+                {
+                    _logger.LogCritical("Database migration failed");
+
+                    throw ex;
+                }
+
+            }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
