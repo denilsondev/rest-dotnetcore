@@ -5,14 +5,15 @@ using System.Threading;
 using RestWithAspNet.Model;
 using RestWithAspNet.Model.Context;
 using RestWithAspNet.Repository;
+using RestWithAspNet.Repository.Generic;
 
 namespace RestWithAspNet.Business.Implementations
 {
     public class PersonBusiness : IPersonBusiness
     {
-        private IPersonRepository _repository;
+        private IRepository<Person> _repository;
 
-        public PersonBusiness(IPersonRepository repository)
+        public PersonBusiness(IRepository<Person> repository)
         {
             _repository = repository;
 
