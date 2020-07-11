@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestWithAspNet.Model;
 using RestWithAspNet.Business;
+using RestWithAspNet.Data.VO;
 
 namespace RestWithAspNet.Controllers
 {
@@ -35,7 +36,7 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return new ObjectResult(_personBusiness.Create(person));
@@ -43,7 +44,7 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Person person)
+        public IActionResult Put(int id, [FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             person.Id = id;
