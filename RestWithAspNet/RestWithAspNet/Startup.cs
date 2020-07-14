@@ -12,6 +12,7 @@ using RestWithAspNet.Repository.Implementations;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using RestWithAspNet.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace RestWithAspNet
 {
@@ -60,6 +61,12 @@ namespace RestWithAspNet
             }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/json"));
+            }).AddXmlSerializerFormatters();
 
             services.AddScoped<IPersonBusiness, PersonBusiness>();
             services.AddScoped<IPersonRepository, PersonRepository>();
