@@ -2,6 +2,9 @@
 using RestWithAspNet.Model;
 using RestWithAspNet.Business;
 using RestWithAspNet.Data.VO;
+using Tapioca.HATEOAS;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 
 namespace RestWithAspNet.Controllers
 {
@@ -20,6 +23,11 @@ namespace RestWithAspNet.Controllers
         }
         
         [HttpGet]
+        [SwaggerResponse((200), Type = typeof(List<PersonVO>))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
@@ -27,6 +35,11 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpGet("{id}")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<string> Get(long id)
         {
             var person = _personBusiness.FindById(id);
@@ -36,6 +49,10 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpPost]
+        [SwaggerResponse((202), Type = typeof(PersonVO))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -44,6 +61,11 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpPut("{id}")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put(int id, [FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -53,6 +75,11 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpDelete("{id}")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {
             _personBusiness.Delete(id);

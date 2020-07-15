@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithAspNet.Business;
 using RestWithAspNet.Data.VO;
 using RestWithAspNet.Model;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,6 +25,10 @@ namespace RestWithAspNet.Controllers
         }
 
         [HttpGet]
+        [SwaggerResponse((200), Type = typeof(List<BookVO>))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
         public ActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
@@ -31,6 +36,10 @@ namespace RestWithAspNet.Controllers
 
 
         [HttpGet("{id}")]
+        [SwaggerResponse((200), Type = typeof(BookVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
         public ActionResult<string> Get(long id)
         {
             var book = _bookBusiness.FindById(id);
@@ -40,6 +49,10 @@ namespace RestWithAspNet.Controllers
 
 
         [HttpPost]
+        [SwaggerResponse((201), Type = typeof(BookVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -49,6 +62,10 @@ namespace RestWithAspNet.Controllers
 
 
         [HttpPut("{id}")]
+        [SwaggerResponse((201), Type = typeof(BookVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
         public IActionResult Put(int id, [FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -58,6 +75,10 @@ namespace RestWithAspNet.Controllers
 
 
         [HttpDelete("{id}")]
+        [SwaggerResponse((201), Type = typeof(BookVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
         public IActionResult Delete(int id)
         {
             _bookBusiness.Delete(id);
