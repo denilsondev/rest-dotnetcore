@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithAspNet.Business;
 using RestWithAspNet.Data.VO;
@@ -29,6 +30,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         public ActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
@@ -40,6 +42,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         public ActionResult<string> Get(long id)
         {
             var book = _bookBusiness.FindById(id);
@@ -53,6 +56,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -66,6 +70,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         public IActionResult Put(int id, [FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -79,6 +84,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         public IActionResult Delete(int id)
         {
             _bookBusiness.Delete(id);

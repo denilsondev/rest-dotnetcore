@@ -12,7 +12,7 @@ namespace RestWithAspNet.Hypermedia
     {
         protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
         {
-            var path = "api/v1/persons";
+            var path = "api/persons/v1";
             var url = new { controller = path, id = content.Id };
 
             content.Links.Add(new HyperMediaLink()
@@ -22,7 +22,6 @@ namespace RestWithAspNet.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultGet
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.POST,
@@ -30,7 +29,6 @@ namespace RestWithAspNet.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.PUT,
@@ -38,7 +36,6 @@ namespace RestWithAspNet.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.DELETE,
@@ -46,7 +43,6 @@ namespace RestWithAspNet.Hypermedia
                 Rel = RelationType.self,
                 Type = "int"
             });
-
             return null;
         }
     }

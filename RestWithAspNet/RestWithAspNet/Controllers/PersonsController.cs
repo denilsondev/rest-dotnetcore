@@ -5,6 +5,7 @@ using RestWithAspNet.Data.VO;
 using Tapioca.HATEOAS;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithAspNet.Controllers
 {
@@ -27,6 +28,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        //[Authorize("Bearer")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult Get()
         {
@@ -39,6 +41,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult<string> Get(long id)
         {
@@ -49,6 +52,7 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpPost]
+        [Authorize("Bearer")]
         [SwaggerResponse((202), Type = typeof(PersonVO))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
@@ -65,6 +69,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put(int id, [FromBody] PersonVO person)
         {
@@ -75,6 +80,7 @@ namespace RestWithAspNet.Controllers
 
         
         [HttpDelete("{id}")]
+        [Authorize("Bearer")]
         [SwaggerResponse((200), Type = typeof(PersonVO))]
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
