@@ -116,6 +116,7 @@ namespace RestWithAspNet
             services.AddScoped<ILoginBusiness, LoginBusiness>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());

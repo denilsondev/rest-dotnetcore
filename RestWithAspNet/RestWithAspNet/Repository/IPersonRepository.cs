@@ -1,15 +1,11 @@
 ﻿using RestWithAspNet.Model;
+using RestWithAspNet.Repository.Generic;
 using System.Collections.Generic;
 
 namespace RestWithAspNet.Repository
 {
-    public interface IPersonRepository
+    public interface IPersonRepository : IRepository<Person>
     {
-        Person Create(Person person);
-        Person FindById(long id);
-        List<Person> FindAll();
-        Person Update(Person person);
-        void Delete(long id);
-        bool Exits(long id);
+        List<Person> FindByName(string firstName, string lastName);
     }
 }

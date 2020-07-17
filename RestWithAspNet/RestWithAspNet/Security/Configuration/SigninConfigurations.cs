@@ -14,7 +14,7 @@ namespace RestWithAspNet.Security.Configuration
                 Key = new RsaSecurityKey(provider.ExportParameters(true));
             }
 
-            SigninCredentials =  new Microsoft.IdentityModel.Tokens.SigningCredentials(Key, SecurityAlgorithms.HmacSha384);
+            SigninCredentials =  new Microsoft.IdentityModel.Tokens.SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);
 
 
         }

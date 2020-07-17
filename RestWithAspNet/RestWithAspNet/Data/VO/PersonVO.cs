@@ -14,10 +14,10 @@ namespace RestWithAspNet.Data.VO
         [DataMember (Order = 1, Name = "id")]
         public long Id { get; set; }
 
-        [DataMember(Order = 2, Name = "lastName")]
+        [DataMember(Order = 2, Name = "firstName")]
         public string FirstName { get; set; }
 
-        [DataMember(Order = 3, Name = "order")]
+        [DataMember(Order = 3, Name = "lastName")]
         public string LastName { get; set; }
 
         [DataMember(Order = 4, Name = "codigo")]

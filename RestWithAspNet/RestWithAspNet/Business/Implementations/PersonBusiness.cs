@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using RestWithAspNet.Data.Converters;
 using RestWithAspNet.Data.VO;
-using RestWithAspNet.Model;
-using RestWithAspNet.Repository.Generic;
+using RestWithAspNet.Repository;
 using RestWithAspNet.Repository.Implementations;
 
 namespace RestWithAspNet.Business.Implementations
 {
     public class PersonBusiness : IPersonBusiness
     {
-        private IRepository<Person> _repository;
+        private IPersonRepository _repository;
         private readonly PersonConverter _converter;
 
-        public PersonBusiness(IRepository<Person> repository)
+        public PersonBusiness(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -50,5 +49,9 @@ namespace RestWithAspNet.Business.Implementations
             return personVO;
         }
 
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            return _converter.ParseList(_repository.FindByName(firstName, lastName));
+        }
     }
 }

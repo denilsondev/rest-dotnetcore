@@ -23,6 +23,7 @@ namespace RestWithAspNet.Controllers
 
         }
 
+
         [AllowAnonymous]
         [HttpPost]
         public object Post([FromBody] User user)

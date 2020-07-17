@@ -28,6 +28,7 @@ namespace RestWithAspNet.Controllers
         [SwaggerResponse((204))]
         [SwaggerResponse((400))]
         [SwaggerResponse((401))]
+        [Authorize("Bearer")]
         //[Authorize("Bearer")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult Get()
@@ -50,7 +51,22 @@ namespace RestWithAspNet.Controllers
             return Ok(person);
         }
 
-        
+
+        [HttpGet("get-by-name")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [Authorize("Bearer")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<string> GetByName([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            var person = _personBusiness.FindByName(firstName, lastName);
+            if (person == null) return NoContent();
+            return Ok(person);
+        }
+
+
         [HttpPost]
         [Authorize("Bearer")]
         [SwaggerResponse((202), Type = typeof(PersonVO))]
