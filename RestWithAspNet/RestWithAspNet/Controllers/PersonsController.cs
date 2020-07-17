@@ -78,7 +78,22 @@ namespace RestWithAspNet.Controllers
             return new ObjectResult(_personBusiness.Update(person));
         }
 
-        
+
+        [HttpPatch("{id}")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [Authorize("Bearer")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Patch(int id, [FromBody] PersonVO person)
+        {
+            if (person == null) return BadRequest();
+            person.Id = id;
+            return new ObjectResult(_personBusiness.Update(person));
+        }
+
+
         [HttpDelete("{id}")]
         [Authorize("Bearer")]
         [SwaggerResponse((200), Type = typeof(PersonVO))]
