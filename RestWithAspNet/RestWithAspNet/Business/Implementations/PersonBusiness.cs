@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using RestWithAspNet.Data.Converters;
 using RestWithAspNet.Data.VO;
+using RestWithAspNet.Model;
 using RestWithAspNet.Repository;
 using RestWithAspNet.Repository.Implementations;
+using Tapioca.HATEOAS.Utils;
 
 namespace RestWithAspNet.Business.Implementations
 {
@@ -33,6 +35,29 @@ namespace RestWithAspNet.Business.Implementations
         public List<PersonVO> FindAll()
         {
             return _converter.ParseList(_repository.FindAll());
+        }
+
+        public PagedSearchDTO<PersonVO> FindWithPagedSearch(string name, string sortDirection, int pagesize, int page)
+        {
+            page = page > 0 ? page = 1 : 0;
+            var query = @"select * from Persons p where 1 = 1 ";
+            if (!string.IsNullOrEmpty(name)) query = query + $"and p.firstName like '%{name}%'";
+            query = query + $"order by p.firstName {sortDirection} limit {pagesize} offset {page}";
+
+            string countQuery = @"select count(*) from Persons p where 1 = 1 ";
+            if (!string.IsNullOrEmpty(name)) countQuery = countQuery + $"and p.firstName like '%{name}%'";
+
+            var persons =_repository.FindWithPagedSearch(query);
+            int totalResults = _repository.GetCount(countQuery);
+
+            return new PagedSearchDTO<PersonVO>
+            {
+                CurrentPage = page + 1,
+                List = _converter.ParseList(persons),
+                PageSize = pagesize,
+                SortDirections = sortDirection,
+                TotalResults = totalResults
+            };
         }
 
         public PersonVO FindById(long id)

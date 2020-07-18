@@ -66,6 +66,20 @@ namespace RestWithAspNet.Controllers
             return Ok(person);
         }
 
+        [HttpGet("get-with-paged-search/{sortDirection}/{pageSize}/{page}")]
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse((204))]
+        [SwaggerResponse((400))]
+        [SwaggerResponse((401))]
+        [Authorize("Bearer")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public ActionResult<string> GetWithPagedSearch([FromQuery] string name, string sortDirection, int pagesize, int page)
+        {
+            var person = _personBusiness.FindWithPagedSearch(name, sortDirection, pagesize, page);
+            if (person == null) return NoContent();
+            return Ok(person);
+        }
+
 
         [HttpPost]
         [Authorize("Bearer")]
