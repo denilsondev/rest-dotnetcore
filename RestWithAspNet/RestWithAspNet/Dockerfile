@@ -1,0 +1,20 @@
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 55670
+EXPOSE 44376
+
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src
+COPY ["RestWithAspNet/RestWithAspNet.csproj", "RestWithAspNet/"]
+RUN dotnet restore "RestWithAspNet/RestWithAspNet.csproj"
+COPY . .
+WORKDIR "/src/RestWithAspNet"
+RUN dotnet build "RestWithAspNet.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "RestWithAspNet.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "RestWithAspNet.dll"]
