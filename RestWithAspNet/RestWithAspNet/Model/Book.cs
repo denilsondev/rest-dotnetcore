@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestWithAspNet.Model
 {
+    [Table("books")]
     public class Book : BaseEntity
     {
         public string Title { get; set; }
