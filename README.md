@@ -1,2 +1,2 @@
 # rest-dotnetcore
-Project developed during course of Rest with AspNet Core in Udemy.
+This is a Api Rest developed with .Net Core 2.0. This is Project was developed during course of Rest with AspNet Core in Udemy.
